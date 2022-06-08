@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private api: ApiService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -31,7 +32,10 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     if(this.registerForm.invalid) return false;
 
-    console.log(this.registerForm.value);
+    this.api.register(this.registerForm.value).subscribe(res => {
+      alert('test');
+    });
+  //  console.log(this.registerForm.value);
   }
 
 }
